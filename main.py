@@ -1,4 +1,3 @@
-
 def es_primo(n: int) -> bool:
     if n <= 1:
         return False
@@ -8,16 +7,56 @@ def es_primo(n: int) -> bool:
     
     if n % 2 == 0 or n % 3 == 0:
         return False
- 
+
     i = 5
     while i * i <= n:
         if n % i == 0 or n % (i + 2) == 0:
             return False
         i += 6
-    
     return True
 
 
+def fibonacci(n: int) -> list:
+    if n <= 0:
+        return []
+    if n == 1:
+        return [0]
+
+    secuencia = [0, 1]
+    while len(secuencia) < n:
+        secuencia.append(secuencia[-1] + secuencia[-2])
+    return secuencia
+
+
+def factorial(n: int) -> int:
+    resultado = 1
+    for i in range(1, n + 1):
+        resultado *= i
+    return resultado
+
+
+def es_perfecto(n: int) -> bool:
+    if n < 2:
+        return False
+    suma = sum(i for i in range(1, n) if n % i == 0)
+    return suma == n
+
+
+def primeros_n_perfectos(cantidad: int) -> list:
+    encontrados = []
+    num = 1
+
+    while len(encontrados) < cantidad:
+        if es_perfecto(num):
+            encontrados.append(num)
+        num += 1
+
+    return encontrados
+
+
+def calcular_factorial_individual():
+    n = obtener_numero_entrada("Ingrese un número para calcular su factorial: ")
+    print(f"El factorial de {n} es: {factorial(n)}")
 
 
 def obtener_numero_entrada(msj):
@@ -25,40 +64,52 @@ def obtener_numero_entrada(msj):
         try:
             return int(input(msj))
         except ValueError:
-            print("Error: ingrese un numero")
+            print("Error: ingrese un número válido.")
+
 
 def main():
     while True:
         print("\n=== MENÚ PRINCIPAL ===")
         print("1. Fibonacci")
-        print("2. Factorial")
+        print("2. Factorial (lista completa)")
         print("3. Primos")
         print("4. N números perfectos")
         print("5. Salir")
+        print("6. Cálculo del factorial de un número")  # ⭐ Nueva opción agregada ⭐
 
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
-            print("Función de Fibonacci (Estudiante 2)")
+            print("\n--- Función de Fibonacci ---")
+            n = obtener_numero_entrada("¿Cuántos números desea generar?: ")
+            print("Secuencia:", fibonacci(n))
+
         elif opcion == "2":
-            print("Función de Factorial (Estudiante 3)")
-       
+            print("\n--- Función de Factorial (Estudiante 3) ---")
+            n = obtener_numero_entrada("Ingrese un número para calcular su factorial: ")
+            print(f"Factorial de {n} = {factorial(n)}")
+
         elif opcion == "3":
-            print("Función de Primos (Estudiante 4)")
-            n = obtener_numero_entrada("Ingrese el numero para verificar si es primo: ")
-            resultado = es_primo(n)
-            if resultado:
-                print(f"{n} es primo")
-            else:
-                print(f"{n} NO es primo")
+            print("\n--- Función de Primos ---")
+            n = obtener_numero_entrada("Ingrese un número para verificar si es primo: ")
+            print(f"{n} es primo" if es_primo(n) else f"{n} NO es primo")
 
         elif opcion == "4":
-            print("Función de N números perfectos (Estudiante 5)")
+            print("\n--- N primeros números perfectos ---")
+            n = obtener_numero_entrada("¿Cuántos números perfectos desea obtener?: ")
+            print(f"Primeros {n} números perfectos:", primeros_n_perfectos(n))
+
         elif opcion == "5":
             print("Saliendo del programa...")
             break
+
+        elif opcion == "6":  # ⭐ Nueva opción implementada ⭐
+            print("\n--- Cálculo del factorial de un número ---")
+            calcular_factorial_individual()
+
         else:
-            print("Opción inválida, intente de nuevo.")
+            print("Opción inválida, intente de nuevoo.")
+
 
 if __name__ == "__main__":
-    main()
+    main() 
