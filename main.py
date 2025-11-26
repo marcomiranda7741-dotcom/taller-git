@@ -50,16 +50,23 @@ def es_perfecto(n: int) -> bool:
     return suma == n
 
 
-def primeros_n_perfectos(cantidad: int) -> list:
-    encontrados = []
-    num = 1
+def generar_numeros_perfectos(limite: int) -> list:
+    perfectos = []
 
-    while len(encontrados) < cantidad:
-        if es_perfecto(num):
-            encontrados.append(num)
-        num += 1
+    for num in range(2, limite + 1):
+        suma_divisores = 0
 
-    return encontrados
+        for i in range(1, int(num**0.5) + 1):
+            if num % i == 0:
+                suma_divisores += i
+                otro = num // i
+                if otro != i and otro != num:
+                    suma_divisores += otro
+
+        if suma_divisores == num:
+            perfectos.append(num)
+
+    return perfectos
 
 
 def calcular_factorial_individual():
@@ -108,7 +115,7 @@ def main():
         elif opcion == "4":
             print("\n--- N primeros números perfectos ---")
             n = obtener_numero_entrada("¿Cuántos números perfectos desea obtener?: ")
-            print(f"Primeros {n} números perfectos:", primeros_n_perfectos(n))
+            print(f"Primeros {n} números perfectos:", generar_numeros_perfectos(n))
 
         elif opcion == "5":
             print("Saliendo del programa...")
