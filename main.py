@@ -17,15 +17,23 @@ def es_primo(n: int) -> bool:
 
 
 def fibonacci(n: int) -> list:
+    if not isinstance(n, int):
+        return "Error: debe ingresar un número entero."
+
     if n <= 0:
-        return []
+        return "Error: el número debe ser mayor que 0."
+
     if n == 1:
         return [0]
 
-    secuencia = [0, 1]
-    while len(secuencia) < n:
-        secuencia.append(secuencia[-1] + secuencia[-2])
-    return secuencia
+    if n == 2:
+        return [0, 1]
+
+    serie = [0, 1]
+    for i in range(2, n):
+        serie.append(serie[-1] + serie[-2])
+
+    return serie
 
 
 def factorial(n: int) -> int:
@@ -81,8 +89,11 @@ def main():
 
         if opcion == "1":
             print("\n--- Función de Fibonacci ---")
-            n = obtener_numero_entrada("¿Cuántos números desea generar?: ")
-            print("Secuencia:", fibonacci(n))
+            try:
+                n = obtener_numero_entrada("Ingrese cuántos números Fibonacci desea generar: ")
+                print(fibonacci(n))
+            except ValueError:
+                print("Debe ingresar un número entero.")
 
         elif opcion == "2":
             print("\n--- Función de Factorial (Estudiante 3) ---")
